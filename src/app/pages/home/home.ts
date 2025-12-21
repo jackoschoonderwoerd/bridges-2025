@@ -1,30 +1,27 @@
 import { Component, computed, inject, InjectionToken } from '@angular/core';
 
 import { LocationService } from '../../core/location';
-import { BRIDGES } from '../../data/bridges';
-import { NgIf } from '@angular/common';
+
+import { DecimalPipe, NgIf } from '@angular/common';
 import { BridgeMatcherService } from '../../core/bridge-matcher';
+import { MatButtonModule } from '@angular/material/button';
+import { BridgeStore } from '../../store/brigde.store';
+import { AuthStore } from '../../store/auth.store';
 
 
 @Component({
     selector: 'app-home',
-    imports: [NgIf],
-    template: `
-    <button (click)="start()">Find bridge</button>
+    imports: [DecimalPipe, MatButtonModule],
+    templateUrl: './home.html',
 
-    <ng-container *ngIf="bridge() as b">
-      <h2>You are probably looking at:</h2>
-      <a [routerLink]="['/bridge', b.slug]">
-        {{ b.name }}
-      </a>
-    </ng-container>
-  `,
     styleUrl: './home.scss',
 
 })
 export class HomeComponent {
     location = inject(LocationService);
     matcher = inject(BridgeMatcherService);
+    bridgeStore = inject(BridgeStore);
+    authStore = inject(AuthStore)
 
     start() {
         this.location.start();
@@ -35,8 +32,8 @@ export class HomeComponent {
         if (!pos) return null;
 
         return this.matcher.findNearest(
-            { lat: pos.coords.latitude, lng: pos.coords.longitude },
-            BRIDGES
+            pos.coords.latitude, pos.coords.longitude,
+            // BRIDGES
         );
     });
 }

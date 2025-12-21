@@ -1,0 +1,30 @@
+<div class="wrapper">
+
+    <h1>Admin Login</h1>
+    <form (ngSubmit)="login()">
+        <mat-form-field>
+
+            <input matInput
+                [(ngModel)]="email"
+                name="email"
+                placeholder="Email"
+                required />
+        </mat-form-field>
+        <mat-form-field>
+
+            <input matInput
+                [(ngModel)]="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                required />
+        </mat-form-field>
+        <button mat-raised-button
+            color="primary"
+            type="submit">Login</button>
+    </form>
+    @if(error) {
+
+    <p>{{ error }}</p>
+    }
+</div>

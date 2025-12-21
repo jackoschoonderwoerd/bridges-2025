@@ -1,1 +1,65 @@
-<p>home works!</p>
+<p>
+    We use your location to determine which bridge you are near.
+</p>
+
+<button mat-raised-button
+    color="primary"
+    (click)="start()">Find nearby bridge</button>
+@if(location.error()) {
+{{ location.error() }}
+}
+
+
+@if(bridge()){
+<h2>You are near:</h2>
+<p><strong>{{ bridge().name }}</strong></p>
+
+} @else {
+<p>no bridge within range</p>
+}
+<button mat-raised-button
+    color="accent"
+    (click)="start()">Refresh location</button>
+
+
+@if(bridgeStore.loading()){
+<div>Loading…</div>
+}
+<!-- <div *ngIf="bridgeStore.loading()">Loading…</div> -->
+
+
+@if(authStore.isLoggedIn()) {
+
+<p>my location:</p>
+@if(location.position()) {
+<pre>
+              Lat: {{ location.position().coords.latitude }}
+              Lng: {{ location.position().coords.longitude }}
+              Accuracy: {{ location.position().coords.accuracy }}m
+            </pre>
+
+} @else {
+<p>no location.position().coords</p>
+}
+
+@if(bridgeStore.error()){
+<div class="error">{{ bridgeStore.error() }}</div>
+}
+
+<small>Location accuracy: {{ location.position()?.coords.accuracy | number:'1.0-0' }} m</small>
+<!-- <div *ngIf="bridgeStore.error()">
+        {{ bridgeStore.error() }}
+    </div> -->
+@if(bridgeStore.hasBridges()) {
+
+<ul>
+    <h4>all bridges</h4>
+    @for(bridge of bridgeStore.bridges();track $index) {
+    <li class="name">{{ bridge.name }}</li>
+    }
+    <!-- <li *ngFor="let bridge of bridgeStore.bridges()">
+            {{ bridge.name }}
+        </li> -->
+</ul>
+}
+}

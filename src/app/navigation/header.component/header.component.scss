@@ -1,0 +1,10 @@
+mat-toolbar {
+    display: flex;
+    gap: 1rem;
+    .link-active {
+        border: 3px solid red;
+    }
+    button {
+        border: 3px solid transparent;
+    }
+}

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home';
+import { adminGuard } from './admin/admin.guard';
 
 export const routes: Routes = [
     {
@@ -9,6 +10,17 @@ export const routes: Routes = [
         path: 'bridge/:slug',
         loadComponent: () => import('./pages/bridge-detail/bridge-detail')
             .then(c => c.BridgeDetail)
+    },
+    {
+        path: 'login',
+        loadComponent: () => import('./auth/login.component/login.component')
+            .then(c => c.LoginComponent)
+    },
+    {
+        path: 'admin',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./admin/admin.component/admin.component')
+            .then(c => c.AdminComponent)
     },
     {
         path: '**',

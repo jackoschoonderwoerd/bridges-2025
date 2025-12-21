@@ -1,0 +1,15 @@
+[{
+        "id": "magere-brug",
+        "name": "Magere Brug",
+        "lat": 52.365997,
+        "lng": 4.902632,
+        "description": "A historic wooden drawbridge over the Amstel."
+    },
+    {
+        "id": "blauwbrug",
+        "name": "Blauwbrug",
+        "lat": 52.366887,
+        "lng": 4.901261,
+        "description": "A wide bridge near Waterlooplein."
+    }
+]

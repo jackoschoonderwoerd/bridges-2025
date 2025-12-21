@@ -1,0 +1,22 @@
+<div class="wrapper">
+    <div class="nav-list">
+        @for(item of userNavigationItems;track $index) {
+        <button mat-button
+            (click)="onCloseSidenav()"
+            [routerLink]="item.link">{{item.appearanceEn}}</button>
+        }
+        @if(authStore.isLoggedIn()) {
+
+        @for(item of adminNavigationItems;track $index) {
+        <button mat-button
+            (click)="onCloseSidenav()"
+            [routerLink]="item.link">{{item.appearanceEn}}</button>
+        }
+        }
+    </div>
+    <button class="close"
+        mat-icon-button
+        (click)="onCloseSidenav()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>

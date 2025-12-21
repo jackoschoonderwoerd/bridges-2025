@@ -1,0 +1,88 @@
+<!-- <h1>Bridge Admin</h1> -->
+
+<form #form="ngForm"
+    (ngSubmit)="saveBridge()">
+    <mat-form-field>
+        <mat-label>name</mat-label>
+        <input [(ngModel)]="current.name"
+            matInput
+            name="name"
+            placeholder="Name"
+            required />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>slug</mat-label>
+        <input [(ngModel)]="current.slug"
+            matInput
+            name="slug"
+            placeholder="Slug"
+            required />
+
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Latitude</mat-label>
+        <input matInput
+            [(ngModel)]="current.lat"
+            name="lat"
+            type="number"
+            required />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Longitude</mat-label>
+        <input matInput
+            [(ngModel)]="current.lng"
+            name="lng"
+            type="number"
+            required />
+    </mat-form-field>
+    <mat-form-field>
+        <textarea matInput
+            [(ngModel)]="current.description"
+            name="description"
+            placeholder="Description"></textarea>
+
+    </mat-form-field>
+    <div class="buttons">
+        <button mat-raised-button
+            color="accent"
+            type="button"
+            (click)="reset()">Clear</button>
+        <button mat-raised-button
+            [disabled]="form.invalid"
+            color="primary"
+            type="submit">{{ current.id ? 'Update' : 'Add' }}</button>
+    </div>
+</form>
+<div class="all-bridges">
+
+    <h2>All Bridges</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>Actions</th>
+        </tr>
+        @for(b of bridges();track $index){
+        <tr>
+            <td>{{ b.name }}</td>
+            <td>{{ b.slug }}</td>
+            <td>
+                <button mat-icon-button
+                    color="primary"
+                    (click)="edit(b)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button
+                    color="warn"
+                    (click)="delete(b.id!)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+        }
+    </table>
+    <button mat-raised-button
+        color="warn"
+        (click)="logout()">Logout</button>
+</div>
+<app-import-bridges />
