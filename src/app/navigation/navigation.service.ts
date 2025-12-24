@@ -13,10 +13,15 @@ export class NavigationService {
 
     userNavigationItems: NavigationItem[] = [
 
+        // {
+        //     appearanceEn: 'login',
+        //     appearanceNl: 'login',
+        //     link: 'login'
+        // },
         {
-            appearanceEn: 'login',
-            appearanceNl: 'login',
-            link: 'login'
+            appearanceEn: 'map',
+            appearanceNl: 'map',
+            link: 'map'
         },
         {
             appearanceEn: 'home',

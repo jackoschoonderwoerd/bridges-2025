@@ -32,8 +32,9 @@ export class HomeComponent {
         if (!pos) return null;
 
         return this.matcher.findNearest(
-            pos.coords.latitude, pos.coords.longitude,
+            // pos.coords.latitude, pos.coords.longitude,
             // BRIDGES
+            pos.lat, pos.lng
         );
     });
 }

@@ -15,6 +15,7 @@ import { Bridge } from '../models/bridge.model';
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 
+
 @Injectable({ providedIn: 'root' })
 export class BridgeStore {
     private readonly _bridges = signal<Bridge[]>([]);
@@ -25,25 +26,22 @@ export class BridgeStore {
     readonly loading = this._loading.asReadonly();
     readonly error = this._error.asReadonly();
 
-    readonly hasBridges = computed(() => this._bridges().length > 0);
-
     private unsubscribe?: () => void;
 
     load() {
         this._loading.set(true);
-        this._error.set(null);
 
         const ref = collection(firestore, 'bridges');
 
         this.unsubscribe = onSnapshot(
             ref,
             snapshot => {
-                const bridges = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data(),
-                })) as Bridge[];
-
-                this._bridges.set(bridges);
+                this._bridges.set(
+                    snapshot.docs.map(d => ({
+                        id: d.id,
+                        ...d.data(),
+                    })) as Bridge[]
+                );
                 this._loading.set(false);
             },
             () => {
@@ -53,15 +51,32 @@ export class BridgeStore {
         );
     }
 
-    async add(bridge: Bridge) {
-        await addDoc(collection(firestore, 'bridges'), bridge);
+
+    async update(current: Bridge) {
+        console.log(current)
+        if (!current.id) return;
+
+        return await updateDoc(
+            doc(firestore, 'bridges', current.id),
+            {
+                name: current.name,
+                slug: current.slug,
+                lat: current.lat,
+                lng: current.lng,
+                description: current.description,
+            }
+        );
     }
 
-    async update(bridge: Bridge) {
-        if (!bridge.id) return;
-        await updateDoc(doc(firestore, 'bridges', bridge.id), bridge as any);
+    async add(current: Bridge) {
+        await addDoc(collection(firestore, 'bridges'), {
+            name: current.name,
+            slug: current.slug,
+            lat: current.lat,
+            lng: current.lng,
+            description: current.description,
+        });
     }
-
     async delete(id: string) {
         await deleteDoc(doc(firestore, 'bridges', id));
     }
@@ -70,43 +85,4 @@ export class BridgeStore {
         this.unsubscribe?.();
     }
 }
-
-// import { Injectable, inject, signal, computed } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Bridge } from '../models/bridge.model';
-
-// @Injectable({ providedIn: 'root' })
-// export class BridgeStore {
-//     private http = inject(HttpClient);
-
-//     // private writable signals
-//     private readonly _bridges = signal<Bridge[] | null>(null);
-//     private readonly _loading = signal(false);
-//     private readonly _error = signal<string | null>(null);
-
-//     // public readonly signals
-//     readonly bridges = this._bridges.asReadonly();
-//     readonly loading = this._loading.asReadonly();
-//     readonly error = this._error.asReadonly();
-
-//     // derived state
-//     readonly hasBridges = computed(() => !!this._bridges()?.length);
-
-//     load() {
-//         this._loading.set(true);
-//         this._error.set(null);
-
-//         this.http.get<Bridge[]>('/data/bridges.json').subscribe({
-//             next: data => {
-//                 console.log(data);
-//                 this._bridges.set(data);
-//                 this._loading.set(false);
-//             },
-//             error: () => {
-//                 this._error.set('Failed to load bridges');
-//                 this._loading.set(false);
-//             },
-//         });
-//     }
-// }
 

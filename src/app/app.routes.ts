@@ -12,6 +12,11 @@ export const routes: Routes = [
             .then(c => c.BridgeDetail)
     },
     {
+        path: 'map',
+        loadComponent: () => import('./map/map/map')
+            .then(c => c.MapComponent)
+    },
+    {
         path: 'login',
         loadComponent: () => import('./auth/login.component/login.component')
             .then(c => c.LoginComponent)

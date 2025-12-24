@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     selector: 'app-footer',
@@ -10,5 +11,5 @@ import { RouterModule } from '@angular/router';
     styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-
+    authService = inject(AuthService)
 }

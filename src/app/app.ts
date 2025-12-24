@@ -5,6 +5,7 @@ import { FooterComponent } from './navigation/footer.component/footer.component'
 import { SidenavComponent } from './navigation/sidenav.component/sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BridgeStore } from './store/brigde.store';
+import { LocationService } from './core/location';
 
 @Component({
     selector: 'app-root',
@@ -22,10 +23,12 @@ import { BridgeStore } from './store/brigde.store';
 })
 export class App {
 
-    bridgeStore = inject(BridgeStore)
+    bridgeStore = inject(BridgeStore);
+    location = inject(LocationService)
 
     constructor() {
         this.bridgeStore.load();
+        this.location.start()
     }
 
 }
