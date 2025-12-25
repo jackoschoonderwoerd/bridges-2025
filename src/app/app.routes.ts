@@ -12,6 +12,11 @@ export const routes: Routes = [
             .then(c => c.BridgeDetail)
     },
     {
+        path: 'add-bridge/:id',
+        loadComponent: () => import('./admin/add-bridge/add-bridge')
+            .then(c => c.AddBridge)
+    },
+    {
         path: 'map',
         loadComponent: () => import('./map/map/map')
             .then(c => c.MapComponent)

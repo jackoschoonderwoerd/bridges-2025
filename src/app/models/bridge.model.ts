@@ -5,4 +5,5 @@ export interface Bridge {
     lat: number | null;
     lng: number | null;
     description: string;
+    imageUrl?: string;
 }

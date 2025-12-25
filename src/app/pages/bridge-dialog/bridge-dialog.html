@@ -4,6 +4,8 @@
     <p>{{ data.description }}</p>
     <p><strong>Latitude:</strong> {{ data.lat }}</p>
     <p><strong>Longitude:</strong> {{ data.lng }}</p>
+    <img [src]="data.imageUrl"
+        alt="">
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

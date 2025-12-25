@@ -1,0 +1,22 @@
+:host {
+    display: grid;
+    grid-template-columns: auto 400px;
+}
+.left {
+}
+.right {
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        .buttons {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            button {
+                flex: 1;
+            }
+        }
+    }
+}

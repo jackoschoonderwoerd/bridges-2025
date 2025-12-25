@@ -3,6 +3,7 @@ import { appConfig } from './app/app.config';
 import { App } from './app/app';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 import { firebaseConfig } from './environments/environment.prod';
 
 import * as L from 'leaflet';
@@ -20,3 +21,4 @@ bootstrapApplication(App, appConfig)
 
 const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
+export const storage = getStorage(app);

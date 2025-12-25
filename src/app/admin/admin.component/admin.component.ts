@@ -13,6 +13,8 @@ import { ImportBridges } from '../../utils/import-bridges/import-bridges';
 import { BridgeStore } from '../../store/brigde.store';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from './../../../main';
 
 
 
@@ -36,6 +38,7 @@ export class AdminComponent {
     fb = inject(FormBuilder);
     id = signal<string>('');
     dialog = inject(MatDialog)
+    selectedFile: File | null = null;
 
     private bridgeStore = inject(BridgeStore);
 
@@ -49,13 +52,49 @@ export class AdminComponent {
         this.initForm()
     }
 
+    onAddBridge() {
+        this.router.navigateByUrl('add-bridge/')
+    }
+
     // bridges = computed(() => this.bridgeService.bridges());
 
-    // current: Bridge = { name: '', slug: '', lat: null, lng: null, description: '' };
+
+
+    // async saveBridge() {
+    //     const current: Bridge = { ...this.bridgeForm.value }
+    //     if (this.id()) {
+    //         current.id = this.id()
+    //         await this.bridgeStore.update(current)
+    //             .then((res: any) => {
+    //                 console.log(res);
+    //                 this.reset()
+    //             });
+    //     } else {
+    //         await this.bridgeStore.add(current);
+    //     }
+    //     this.reset();
+    // }
 
     async saveBridge() {
-        const current: Bridge = { ...this.bridgeForm.value }
+
+        let current: Bridge = { ...this.bridgeForm.value }
+        let imageUrl = current.imageUrl;
+
+        if (this.selectedFile) {
+            const filePath = `bridges/${Date.now()}-${this.selectedFile.name}`;
+            const fileRef = ref(storage, filePath)
+
+            await uploadBytes(fileRef, this.selectedFile);
+            imageUrl = await getDownloadURL(fileRef)
+        }
+        current = {
+            ...current,
+            imageUrl
+        }
+
         if (this.id()) {
+            console.log(current);
+
             current.id = this.id()
             await this.bridgeStore.update(current)
                 .then((res: any) => {
@@ -87,6 +126,8 @@ export class AdminComponent {
 
 
     edit(bridge: Bridge) {
+        this.router.navigate(['add-bridge', bridge.id])
+        return
         this.id.set(bridge.id)
         this.bridgeForm.patchValue({
             name: bridge.name ? bridge.name : null,
@@ -117,5 +158,11 @@ export class AdminComponent {
             lng: new FormControl(null, [Validators.required]),
             description: new FormControl('', [Validators.required])
         })
+    }
+    onFileSelected(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input.files?.length) {
+            this.selectedFile = input.files[0];
+        }
     }
 }

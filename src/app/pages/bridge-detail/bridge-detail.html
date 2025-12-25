@@ -1,6 +1,8 @@
 <p>bridge-detail works!</p>
 <h1>{{ bridge()?.name }}</h1>
 <p>{{ bridge()?.description }}</p>
+<img [src]="bridge()?.imageUrl"
+    alt="">
 
 @if(bridge()){
 <qrcode [qrdata]="qrUrl(bridge().slug)"

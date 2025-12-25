@@ -1,45 +1,17 @@
-<!-- <h1>Bridge Admin</h1> -->
 <div class="left">
-    <button mat-raised-button
-        (click)="onAddBridge()">add bridge</button>
-    <div class="all-bridges">
 
-        <h2>All Bridges</h2>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Actions</th>
-            </tr>
-            @for(b of bridges();track $index){
-            <tr>
-                <td>{{ b.name }}</td>
-                <td>{{ b.slug }}</td>
-                <td>
-                    <button mat-icon-button
-                        color="primary"
-                        (click)="edit(b)">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                        color="warn"
-                        (click)="delete(b.id!)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </td>
-            </tr>
-            }
-        </table>
-        <button mat-raised-button
-            color="warn"
-            (click)="logout()">Logout</button>
-    </div>
+    @if(current() && current().imageUrl && !imagePreview()){
+    <img [src]="current().imageUrl"
+        alt="not found">
+    }
+    @if(imagePreview()) {
+    <img [src]="imagePreview()"
+        alt="">
+    }
 </div>
 <div class="right">
 
-    <form #form="ngForm"
-        [formGroup]="bridgeForm"
-        (ngSubmit)="saveBridge()">
+    <form [formGroup]="form">
         <mat-form-field>
             <mat-label>name</mat-label>
             <input matInput
@@ -76,21 +48,24 @@
 
         </mat-form-field>
         <input type="file"
+            #fileInput
+            style="display: none;"
             accept="image/*"
             (change)="onFileSelected($event)">
+        <button mat-raised-button
+            (click)="fileInput.click()">select image file</button>
+        <button mat-raised-button
+            (click)="onDeleteImage()">delete image</button>
         <div class="buttons">
             <button mat-raised-button
                 color="accent"
                 type="button"
-                (click)="reset()">Clear</button>
+                (click)="onClear()">Clear</button>
             <button mat-raised-button
-                [disabled]="form.invalid"
                 color="primary"
-                type="submit">{{ id() ? 'Update' : 'Add' }}</button>
+                (click)="onSaveBridge()">{{ editmode() ? 'Update' : 'Add' }}</button>
+            <button mat-raised-button
+                (click)="onCancel()">cancel</button>
         </div>
     </form>
-
-
 </div>
-
-<app-import-bridges />
