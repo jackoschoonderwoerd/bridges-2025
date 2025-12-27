@@ -1,0 +1,32 @@
+<div class="demo-panel">
+    <label>Demo location</label>
+
+    <select (change)="teleport($event.target.value)">
+        <option value="">— Select a bridge —</option>
+        @for(b of bridges();track $index){
+
+        <option [value]="b.id">
+            {{ b.name }}
+        </option>
+        }
+    </select>
+
+    <button (click)="disable()">Exit demo mode</button>
+</div>
+
+<!-- @if(demoVisible){
+
+ <div class="demo-panel">
+     {{realBridges}}
+     <label>Demo mode:</label>
+
+     <select (change)="selectBridge($event)">
+         <option value="">— real location —</option>
+         @for(b of realBridges;track $index) {
+         <option [value]="b.name">
+             {{ b.name }}
+         </option>
+         }
+     </select>
+ </div>
+ } -->

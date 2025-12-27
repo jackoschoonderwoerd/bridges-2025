@@ -9,6 +9,10 @@
         <app-header (sidenavToggle)="sidenav.open()"></app-header>
 
         <main class="content">
+
+            @if(location.demoMode()){
+            <app-demo-control />
+            }
             <router-outlet />
         </main>
 
