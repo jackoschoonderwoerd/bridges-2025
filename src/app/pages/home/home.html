@@ -5,8 +5,8 @@
 <button mat-raised-button
     color="primary"
     (click)="start()">Find nearby bridge</button>
-@if(location.error()) {
-{{ location.error() }}
+@if(locationService.error()) {
+{{ locationService.error() }}
 }
 
 
@@ -25,17 +25,17 @@
 @if(bridgeStore.loading()){
 <div>Loading…</div>
 }
-<!-- <div *ngIf="bridgeStore.loading()">Loading…</div> -->
+
 
 
 @if(authStore.isLoggedIn()) {
 
 <p>my location:</p>
-@if(location.position()) {
+@if(locationService.position()) {
 <pre>
-              Lat: {{ location.position().coords.latitude }}
-              Lng: {{ location.position().coords.longitude }}
-              Accuracy: {{ location.position().coords.accuracy }}m
+              Lat: {{ locationService.position().lat }}
+              Lng: {{ locationService.position().lng }}
+              Accuracy: {{ locationService.position().accuracy }}m
             </pre>
 
 } @else {
@@ -45,21 +45,20 @@
 @if(bridgeStore.error()){
 <div class="error">{{ bridgeStore.error() }}</div>
 }
+<small>Location accuracy: {{ locationService.position()?.accuracy | number:'1.0-0' }} m</small>
 
-<small>Location accuracy: {{ location.position()?.coords.accuracy | number:'1.0-0' }} m</small>
-<!-- <div *ngIf="bridgeStore.error()">
-        {{ bridgeStore.error() }}
-    </div> -->
-@if(bridgeStore.hasBridges()) {
+
+
+
+
+@if(bridgeStore.bridges().length){
 
 <ul>
     <h4>all bridges</h4>
     @for(bridge of bridgeStore.bridges();track $index) {
     <li class="name">{{ bridge.name }}</li>
     }
-    <!-- <li *ngFor="let bridge of bridgeStore.bridges()">
-            {{ bridge.name }}
-        </li> -->
+
 </ul>
 }
 }

@@ -1,15 +1,26 @@
-<div class="left">
+<div class="wrapper">
 
-    @if(current() && current().imageUrl && !imagePreview()){
-    <img [src]="current().imageUrl"
-        alt="not found">
-    }
-    @if(imagePreview()) {
-    <img [src]="imagePreview()"
-        alt="">
-    }
-</div>
-<div class="right">
+    <div class="preview">
+
+        @if(current() && current().imageUrl && !imagePreview()){
+        <img [src]="current().imageUrl"
+            alt="not found">
+        }
+        @if(imagePreview()) {
+        <img [src]="imagePreview()"
+            alt="">
+        }
+        <div class="description-preview"
+            [innerHTML]="description()">
+        </div>
+    </div>
+
+
+    <div class="text-editor-container">
+        <app-quill-text-editor [textIn]="description()"
+            (valueChange)="onValueChange($event)"></app-quill-text-editor>
+    </div>
+
 
     <form [formGroup]="form">
         <mat-form-field>
@@ -41,21 +52,24 @@
                 type="number"
                 required />
         </mat-form-field>
-        <mat-form-field>
+        <!-- <mat-form-field>
             <textarea matInput
                 formControlName="description"
                 placeholder="Description"></textarea>
 
-        </mat-form-field>
+        </mat-form-field> -->
         <input type="file"
             #fileInput
             style="display: none;"
             accept="image/*"
             (change)="onFileSelected($event)">
-        <button mat-raised-button
-            (click)="fileInput.click()">select image file</button>
-        <button mat-raised-button
-            (click)="onDeleteImage()">delete image</button>
+        <div class="image-buttons">
+            <button mat-raised-button
+                (click)="fileInput.click()">select image file</button>
+            <button mat-raised-button
+                (click)="onDeleteImage()">delete image</button>
+
+        </div>
         <div class="buttons">
             <button mat-raised-button
                 color="accent"

@@ -18,17 +18,17 @@ import { AuthStore } from '../../store/auth.store';
 
 })
 export class HomeComponent {
-    location = inject(LocationService);
+    locationService = inject(LocationService);
     matcher = inject(BridgeMatcherService);
     bridgeStore = inject(BridgeStore);
     authStore = inject(AuthStore)
 
     start() {
-        this.location.start();
+        this.locationService.start();
     }
 
     bridge = computed(() => {
-        const pos = this.location.position();
+        const pos = this.locationService.position();
         if (!pos) return null;
 
         return this.matcher.findNearest(

@@ -1,15 +1,38 @@
-:host {
+.wrapper {
+    border: 3px solid gray;
+    width: 100%;
     display: grid;
-    grid-template-columns: auto 400px;
-}
-.left {
-}
-.right {
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 400px;
+    grid-template-areas: "preview quill form";
+
+    .preview {
+        grid-area: preview;
+        border: 3px solid black;
+        padding: 1rem;
+        img {
+            grid-area: image;
+        }
+        .description-preview {
+        }
+    }
+    .text-editor-container {
+        grid-area: quill;
+    }
     form {
+        grid-area: form;
+        border: 3px solid pink;
         display: flex;
         flex-direction: column;
         width: 100%;
-        max-width: 300px;
+        max-width: 400px;
+        .image-buttons {
+            display: flex;
+            gap: 1rem;
+            button {
+                flex: 1;
+            }
+        }
         .buttons {
             margin-top: 1rem;
             display: flex;

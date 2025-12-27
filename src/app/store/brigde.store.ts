@@ -8,9 +8,10 @@ import {
     doc,
     getFirestore,
 } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from './../../environments/environment.prod';
 import { Bridge } from '../models/bridge.model';
+import { initializeApp } from 'firebase/app';
+
 
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);

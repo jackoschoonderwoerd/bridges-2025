@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Signal, signal } from '@angular/core';
+import { Component, inject, OnInit, output, Signal, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,7 @@ import { BridgeStore } from '../../store/brigde.store';
 import { Bridge } from '../../models/bridge.model';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from './../../../main';
+import { QuillTextEditor } from '../../shared/quill/quill-text-editor';
 
 @Component({
     selector: 'app-add-bridge',
@@ -18,7 +19,8 @@ import { storage } from './../../../main';
         MatButtonModule,
         MatInput,
         FormsModule,
-        MatIconModule
+        MatIconModule,
+        QuillTextEditor
     ],
     templateUrl: './add-bridge.html',
     styleUrl: './add-bridge.scss',
@@ -34,7 +36,9 @@ export class AddBridge implements OnInit {
     imageUrl = signal<string>('');
     selectedFile = signal<File>(null);
     current = signal<Bridge | null>(null);
-    imagePreview = signal<string | null>(null)
+    imagePreview = signal<string | null>(null);
+    description = signal<string>(null)
+    // textOut = output<string>();
 
 
     constructor() {
@@ -46,9 +50,10 @@ export class AddBridge implements OnInit {
             this.id.set(this.route.snapshot.paramMap.get('id'))
             this.editmode.set(true)
             this.current.set(this.bridgeStore.bridges().find(b => b.id === id));
-            // if (this.current().imageUrl) {
-            //     this.imageUrl.set(bridge.imageUrl);
-            // }
+            if (this.current()) {
+
+                this.description.set(this.current().description)
+            }
             this.patchForm()
         }
     }
@@ -63,18 +68,18 @@ export class AddBridge implements OnInit {
             slug: new FormControl('', [Validators.required]),
             lat: new FormControl(null, [Validators.required]),
             lng: new FormControl(null, [Validators.required]),
-            description: new FormControl('', [Validators.required])
+            // description: new FormControl('', [Validators.required])
         })
     }
 
     patchForm() {
-        console.log(this.current())
+        // console.log(this.current())
         this.form.patchValue({
             name: this.current().name ? this.current().name : null,
             slug: this.current().slug ? this.current().slug : null,
             lat: this.current().lat ? this.current().lat : null,
             lng: this.current().lng ? this.current().lng : null,
-            description: this.current().description ? this.current().description : null,
+            // description: this.current().description ? this.current().description : null,
         })
 
     }
@@ -82,7 +87,9 @@ export class AddBridge implements OnInit {
     async onSaveBridge() {
         let current: Bridge = {
             ...this.form.value,
-            id: this.id()
+            imageUrl: this.current().imageUrl,
+            id: this.id(),
+            description: this.description()
         }
 
         if (this.selectedFile()) {
@@ -98,7 +105,6 @@ export class AddBridge implements OnInit {
         } else {
             this.bridgeStore.update(current)
                 .then((res: any) => {
-                    console.log(res)
                     this.router.navigateByUrl('admin')
                 });
         }
@@ -133,4 +139,7 @@ export class AddBridge implements OnInit {
         this.router.navigateByUrl('admin')
     }
 
+    onValueChange(description: string) {
+        this.description.set(description)
+    }
 }

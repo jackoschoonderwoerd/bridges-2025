@@ -1,0 +1,12 @@
+.wrapper {
+    border: 3px solid red;
+    display: grid;
+    // grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    width: 100%;
+    .quill-container {
+        min-height: 200px;
+        border-radius: 6px;
+    }
+    .preview {
+    }
+}

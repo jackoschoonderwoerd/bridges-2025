@@ -22,6 +22,10 @@ export class MapComponent implements AfterViewInit {
     private map!: L.Map;
     private markers = L.layerGroup();
     private dialog = inject(MatDialog);
+    private activeBridgeId: string | null = null;
+
+
+
 
     // 🔑 EFFECT IS A FIELD (this fixes NG0203)
     private updateMapEffect = effect(() => {
@@ -34,26 +38,19 @@ export class MapComponent implements AfterViewInit {
         // Bridges
         bridges.forEach(b => {
             if (b.lat == null || b.lng == null) return;
-
-            // L.marker([b.lat, b.lng])
-            //     .bindPopup(`<strong>${b.name}</strong>`)
-            //     .addTo(this.markers);
             const marker = L.marker([b.lat, b.lng]).addTo(this.markers);
-
-            marker.on('click', () => {
-                // marker.setIcon(
-                //     L.divIcon({
-                //         className: 'selected-bridge',
-                //         html: '📍',
-                //         iconSize: [50, 50],
-                //     })
-                // );
-
-                this.dialog.open(BridgeDialog, {
-                    data: b,
-                });
-            });
+            marker
+                .on('click', () => {
+                    // this.dialog.open(BridgeDialog, {
+                    //     data: b,
+                    // });
+                    this.activeBridgeId = b.id!;
+                    this.openBridgeDialog(b);
+                })
+                .addTo(this.markers);
         });
+
+
 
         // User
         L.circleMarker([user.lat, user.lng], {
@@ -64,7 +61,7 @@ export class MapComponent implements AfterViewInit {
         // 3️⃣ Find nearest bridge
         const nearest = this.findNearestBridge(user.lat, user.lng, bridges);
         if (!nearest) return;
-        console.log(nearest)
+
         if (nearest) {
             L.circleMarker([nearest.lat, nearest.lng], {
                 radius: 12,
@@ -76,6 +73,24 @@ export class MapComponent implements AfterViewInit {
                 .bindPopup(`Nearest bridge: <strong>${nearest.name}</strong>`)
                 .addTo(this.markers);
         }
+
+        // L.circleMarker([nearest.lat, nearest.lng], {
+        //     radius: 12,
+        //     color: 'red',
+        //     weight: 3,
+        //     fillOpacity: 0.7,
+        // })
+        //     .addTo(this.markers);
+
+
+        if (nearest && nearest.id !== this.activeBridgeId) {
+            this.activeBridgeId = nearest.id;
+            // this.openBridgeDialog(nearest);
+            if (this.dialog.openDialogs.length === 0) {
+                this.openBridgeDialog(nearest);
+            }
+        }
+
         // 4️⃣ 🔴 Highlight nearest bridge (THIS IS WHERE YOUR CODE GOES)
         L.circleMarker([nearest.lat, nearest.lng], {
             radius: 12,
@@ -102,6 +117,7 @@ export class MapComponent implements AfterViewInit {
         this.location.start();
         this.bridgeStore.load();
     }
+
 
     private findNearestBridge(
         userLat: number,
@@ -142,6 +158,14 @@ export class MapComponent implements AfterViewInit {
             Math.sin(dLng / 2) ** 2;
 
         return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    private openBridgeDialog(bridge: Bridge) {
+        this.dialog.open(BridgeDialog, {
+            data: bridge,
+            width: '400px',
+            autoFocus: false,
+        });
     }
 
 }

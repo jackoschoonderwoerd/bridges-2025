@@ -1,11 +1,17 @@
 <h2 mat-dialog-title>{{ data.name }}</h2>
-
 <mat-dialog-content>
-    <p>{{ data.description }}</p>
-    <p><strong>Latitude:</strong> {{ data.lat }}</p>
-    <p><strong>Longitude:</strong> {{ data.lng }}</p>
-    <img [src]="data.imageUrl"
-        alt="">
+    <div class="wrapper">
+
+        <p [innerHTML]="data.description"></p>
+        @if(authStore.isLoggedIn()){
+        <p><strong>Latitude:</strong> {{ data.lat }}</p>
+        <p><strong>Longitude:</strong> {{ data.lng }}</p>
+        }
+        <div class="image-container">
+            <img [src]="data.imageUrl"
+                alt="">
+        </div>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
