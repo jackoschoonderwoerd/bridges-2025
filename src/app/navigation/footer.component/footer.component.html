@@ -1,4 +1,8 @@
 <div class="wrapper">
+    <button mat-raised-button
+        (click)="toggleDemo()">
+        {{ demoService.enabled() ? 'Stop animation' : 'Start animation' }}
+    </button>
     @if(!authService.isLoggedIn()){
     <button mat-icon-button>
         <a routerLink="login">

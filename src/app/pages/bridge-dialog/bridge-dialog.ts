@@ -8,7 +8,7 @@ import { AuthStore } from '../../store/auth.store';
 @Component({
     selector: 'app-bridge-dialog',
     standalone: true,
-    imports: [MatDialogModule, MatButtonModule, JsonPipe],
+    imports: [MatDialogModule, MatButtonModule],
     templateUrl: './bridge-dialog.html',
 })
 export class BridgeDialog {

@@ -1,6 +1,8 @@
 .wrapper {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
     button {
         mat-icon {
             color: white;

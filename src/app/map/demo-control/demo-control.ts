@@ -10,8 +10,8 @@ import { BridgeStore } from '../../store/brigde.store';
     styleUrl: './demo-control.scss',
 })
 export class DemoControl {
-    bridgeStore = inject(BridgeStore)
-    private location = inject(LocationService);
+    private bridgeStore = inject(BridgeStore)
+    private locationService = inject(LocationService);
 
     bridges = this.bridgeStore.bridges
 
@@ -20,10 +20,11 @@ export class DemoControl {
         const bridge = this.bridges().find(b => b.id === id);
         if (!bridge) return;
 
-        this.location.setDemoLocation(bridge.lat, bridge.lng);
+        this.locationService.setDemoLocation(bridge.lat, bridge.lng);
+
     }
 
     disable() {
-        this.location.disableDemoMode();
+        this.locationService.disableDemoMode();
     }
 }

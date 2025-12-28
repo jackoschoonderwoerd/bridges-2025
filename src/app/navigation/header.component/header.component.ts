@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
 import { AuthStore } from '../../store/auth.store';
+import { DemoService } from '../../store/demo.service';
+import { BridgeStore } from '../../store/brigde.store';
 
 
 @Component({
@@ -19,6 +21,8 @@ export class HeaderComponent {
 
     userNavigationItems: NavigationItem[] = [];
     adminNavigationItems: NavigationItem[] = [];
+    demoService = inject(DemoService);
+    bridgeStore = inject(BridgeStore)
 
     sidenavToggle = output<void>()
 
@@ -30,4 +34,5 @@ export class HeaderComponent {
     toggleSidenav() {
         this.sidenavToggle.emit()
     }
+
 }
