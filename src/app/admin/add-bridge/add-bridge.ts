@@ -68,7 +68,9 @@ export class AddBridge implements OnInit {
             slug: new FormControl('', [Validators.required]),
             lat: new FormControl(null, [Validators.required]),
             lng: new FormControl(null, [Validators.required]),
-            // description: new FormControl('', [Validators.required])
+            publicUrl: new FormControl(null)
+            // description: new FormControl('', [Validators.required]),
+
         })
     }
 
@@ -79,6 +81,7 @@ export class AddBridge implements OnInit {
             slug: this.current().slug ? this.current().slug : null,
             lat: this.current().lat ? this.current().lat : null,
             lng: this.current().lng ? this.current().lng : null,
+            publicUrl: this.current().publicUrl ? this.current().publicUrl : null
             // description: this.current().description ? this.current().description : null,
         })
 

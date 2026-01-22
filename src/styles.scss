@@ -1,3 +1,5 @@
+@import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+
 html,
 body {
     height: 100%;
@@ -13,4 +15,8 @@ button {
 * {
     box-sizing: border-box;
     // letter-spacing: 1px;
+}
+.iframe-container .mat-mdc-dialog-content {
+    padding: 0;
+    margin: 0;
 }

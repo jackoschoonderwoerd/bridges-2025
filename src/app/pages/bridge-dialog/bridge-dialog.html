@@ -1,20 +1,59 @@
-<h2 mat-dialog-title>{{ data.name }}</h2>
-<mat-dialog-content>
-    <div class="wrapper">
+<div class="host"
+    style="height: 100%; display: flex; flex-direction: column;">
 
-        <p [innerHTML]="data.description"></p>
-        @if(authStore.isLoggedIn()){
-        <p><strong>Latitude:</strong> {{ data.lat }}</p>
-        <p><strong>Longitude:</strong> {{ data.lng }}</p>
-        }
-        <div class="image-container">
+    <!-- <h2 mat-dialog-title>{{ data.name }}</h2> -->
+    <!-- <mat-dialog-content style="border:3px solid green;height:1000px"> -->
+    @if(data.publicUrl){
+
+    <iframe style="width: 100%; height:100%"
+        [src]="iframeUrl"
+        frameborder="0"
+        loading="lazy"></iframe>
+
+    } @else {
+    <div class="no-data"
+        style="height: 100%; display: flex; flex-direction: column; align-items: center;justify-content: center;">
+        <p>no data available</p>
+    </div>
+    }
+    <button mat-raised-button
+        color="warn"
+        mat-dialog-close>close</button>
+
+    <!-- <div class="wrapper"> -->
+    <!-- <p [innerHTML]="data.description"></p> -->
+    <!-- @if(data.publicUrl){
+        <div class="iframe-container"
+            style="border: 3px solid red;">
+            <iframe [src]="iframeUrl"
+                [width]="iframeWidth"
+                [height]="iframeHeight"
+                frameborder="0"
+                loading="lazy"></iframe>
+        </div>
+        } -->
+
+
+    @if(authStore.isLoggedIn()){
+    <div class="admin"
+        style="display: flex !important;
+        gap: 0.3rem !important;
+        padding: 0.5rem !important;">
+        <div class="name">{{ data.name }}</div>
+        <div><strong>Latitude:</strong> {{ data.lat }}</div>
+        <div><strong>Longitude:</strong> {{ data.lng }}</div>
+    </div>
+    }
+    <!-- <div class="image-container">
             <img [src]="data.imageUrl"
                 alt="">
-        </div>
-    </div>
-</mat-dialog-content>
+        </div> -->
+    <!-- <div class="">{{data.publicUrl}}</div> -->
+    <!-- </div> -->
+    <!-- </mat-dialog-content> -->
 
-<mat-dialog-actions align="end">
-    <button mat-button
-        mat-dialog-close>Close</button>
-</mat-dialog-actions>
+    <!-- <mat-dialog-actions align="end">
+        <button mat-button
+            mat-dialog-close>Close</button>
+    </mat-dialog-actions> -->
+</div>

@@ -3,7 +3,7 @@ import { Bridge } from '../models/bridge.model';
 
 @Injectable({ providedIn: 'root' })
 export class DemoService {
-    enabled = signal(false);
+    demoEnabled = signal(false);
 
     bridges = signal<Bridge[]>([]);
     index = signal(0);
@@ -20,10 +20,10 @@ export class DemoService {
     });
 
     start(bridges: Bridge[]) {
-        console.log('start()')
+        console.log('demoStart()')
         this.bridges.set(bridges);
         this.index.set(0);
-        this.enabled.set(true);
+        this.demoEnabled.set(true);
 
         this.timer = window.setInterval(() => {
             this.next();
@@ -32,7 +32,7 @@ export class DemoService {
 
     stop() {
         console.log('stop')
-        this.enabled.set(false);
+        this.demoEnabled.set(false);
         if (this.timer) {
             clearInterval(this.timer);
             this.timer = undefined;

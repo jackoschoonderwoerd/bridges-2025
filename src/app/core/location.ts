@@ -1,5 +1,6 @@
 import { computed, effect, inject, Injectable, signal } from "@angular/core";
 import { DemoService } from "../store/demo.service";
+import { RouteControlService } from "../store/route-control.service";
 
 export interface LatLng {
     lat: number;
@@ -14,6 +15,7 @@ export class LocationService {
 
     position = signal<LatLng | null>(null);
 
+    routeControlService = inject(RouteControlService)
 
     demoMode = signal<boolean>(false)
 
@@ -21,7 +23,7 @@ export class LocationService {
 
     constructor() {
         effect(() => {
-            if (!this.demoService.enabled()) return;
+            if (!this.demoService.demoEnabled()) return;
 
             const bridge = this.demoService.currentBridge();
             if (!bridge) return;

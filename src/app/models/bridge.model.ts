@@ -6,4 +6,5 @@ export interface Bridge {
     lng: number | null;
     description: string;
     imageUrl?: string;
+    publicUrl?: string;
 }

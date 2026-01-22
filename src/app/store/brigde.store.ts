@@ -65,7 +65,8 @@ export class BridgeStore {
                 lat: current.lat,
                 lng: current.lng,
                 description: current.description,
-                imageUrl: current.imageUrl ? current.imageUrl : null
+                imageUrl: current.imageUrl ? current.imageUrl : null,
+                publicUrl: current.publicUrl ? current.publicUrl : null
             }
         );
     }
@@ -77,7 +78,8 @@ export class BridgeStore {
             lat: current.lat,
             lng: current.lng,
             description: current.description,
-            imageUrl: current.imageUrl
+            imageUrl: current.imageUrl,
+            publicUrl: current.publicUrl
         });
     }
     async delete(id: string) {

@@ -1,7 +1,7 @@
 <div class="wrapper">
     <button mat-raised-button
         (click)="toggleDemo()">
-        {{ demoService.enabled() ? 'Stop animation' : 'Start animation' }}
+        {{ demoService.demoEnabled() ? 'Stop animation' : 'Start animation' }}
     </button>
     @if(!authService.isLoggedIn()){
     <button mat-icon-button>
@@ -11,6 +11,10 @@
         </a>
     </button>
     } @else {
+    <button mat-raised-button
+        (click)="toggleRoute()">
+        {{ routeControl.showRoute() ? 'Hide route' : 'Show route to nearest bridge' }}
+    </button>
     <button mat-icon-button
         (click)="authService.logout()">
         <mat-icon>logout</mat-icon>
