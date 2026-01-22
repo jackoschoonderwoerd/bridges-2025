@@ -1,13 +1,16 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button
+    <button class="menu"
+        mat-icon-button
         (click)="toggleSidenav()">
         <mat-icon>menu</mat-icon>
     </button>
-    @for(item of userNavigationItems;track $index){
-    <button mat-raised-button
-        routerLinkActive="link-active"
-        [routerLink]="item.link">{{item.appearanceEn}}</button>
-    }
+    <div class="nav-buttons">
+        @for(item of userNavigationItems;track $index){
+        <button mat-raised-button
+            routerLinkActive="link-active"
+            [routerLink]="item.link">{{item.appearanceEn}}</button>
+        }
+    </div>
 
 
     @if(authStore.isLoggedIn()){

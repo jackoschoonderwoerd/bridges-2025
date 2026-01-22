@@ -19,15 +19,15 @@ export class NavigationService {
         //     link: 'login'
         // },
         {
+            appearanceEn: 'home',
+            appearanceNl: 'home',
+            link: 'home'
+        },
+        {
             appearanceEn: 'map',
             appearanceNl: 'map',
             link: 'map'
         },
-        {
-            appearanceEn: 'home',
-            appearanceNl: 'home',
-            link: 'home'
-        }
     ];
     adminNavigationItems: NavigationItem[] = [
         {

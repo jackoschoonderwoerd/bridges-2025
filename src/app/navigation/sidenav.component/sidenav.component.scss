@@ -3,16 +3,24 @@
     height: 100%;
     padding: 1rem;
     .nav-list {
+        // border: 3px solid yellow;
         margin-top: 2rem;
         display: flex;
+
         gap: 1rem;
         flex-direction: column;
+        margin-right: auto;
+        button {
+            background-color: blue;
+            color: white;
+            text-transform: uppercase;
+        }
     }
     .close {
         position: absolute;
         bottom: 10px;
         right: 10px;
-        background-color: black;
+        background-color: blue;
         color: white;
     }
 }

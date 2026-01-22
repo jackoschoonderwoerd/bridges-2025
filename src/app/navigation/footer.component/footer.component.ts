@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { DemoService } from '../../store/demo.service';
 import { BridgeStore } from '../../store/brigde.store';
 import { MatDialog } from '@angular/material/dialog';
 import { RouteControlService } from '../../store/route-control.service';
+import { UiStore } from '../../store/ui.store';
 
 @Component({
     selector: 'app-footer',
@@ -20,6 +21,13 @@ export class FooterComponent {
     bridgeStore = inject(BridgeStore);
     matDialog = inject(MatDialog)
     routeControl = inject(RouteControlService);
+    route = inject(ActivatedRoute);
+    uiStore = inject(UiStore)
+
+    constructor() {
+        console.log(this.route.snapshot)
+
+    }
 
     toggleDemo() {
         if (this.demoService.demoEnabled()) {

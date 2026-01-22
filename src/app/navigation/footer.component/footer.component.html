@@ -1,8 +1,10 @@
 <div class="wrapper">
+    @if(uiStore.route() === '/map') {
     <button mat-raised-button
         (click)="toggleDemo()">
         {{ demoService.demoEnabled() ? 'Stop animation' : 'Start animation' }}
     </button>
+    }
     @if(!authService.isLoggedIn()){
     <button mat-icon-button>
         <a routerLink="login">
@@ -11,10 +13,10 @@
         </a>
     </button>
     } @else {
-    <button mat-raised-button
+    <!-- <button mat-raised-button
         (click)="toggleRoute()">
         {{ routeControl.showRoute() ? 'Hide route' : 'Show route to nearest bridge' }}
-    </button>
+    </button> -->
     <button mat-icon-button
         (click)="authService.logout()">
         <mat-icon>logout</mat-icon>

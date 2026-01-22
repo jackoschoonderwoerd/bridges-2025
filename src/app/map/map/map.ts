@@ -126,7 +126,7 @@ export class MapComponent implements AfterViewInit {
         ) {
             this.activeBridgeId = nearest.id!;
 
-            this.openBridgeDialog(nearest);
+            // this.openBridgeDialog(nearest);
         }
 
         if (this.routeControlService.showRoute()) {
